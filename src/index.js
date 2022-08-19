@@ -21,7 +21,6 @@ function onInputField() {
         (refs.countryInfo.innerHTML = "")
     };
 
-
 fetchCountries(name)
     .then(countries => {
         refs.countryList.innerHTML = ''
@@ -37,7 +36,6 @@ fetchCountries(name)
         })
     .catch(alertWrongName)
 };  
-
 
 function searchCountryList(flagList) {
     const markup = flagList
