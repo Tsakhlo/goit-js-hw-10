@@ -17,7 +17,8 @@ refs.inputField.addEventListener('input', debounce(onInputField, DEBOUNCE_DELAY)
 function onInputField() {
     const name = refs.inputField.value.trim();
     if (name === "") {
-        return (refs.countryList.innerHTML = ""), (refs.countryInfo.innerHTML = "")
+        return (refs.countryList.innerHTML = ""), 
+        (refs.countryInfo.innerHTML = "")
     };
 
 
@@ -26,28 +27,28 @@ fetchCountries(name)
         refs.countryList.innerHTML = ''
         refs.countryInfo.innerHTML = ''
         if (countries.length === 1) {
-            refs.countryList.insertAdjacentHTML('beforeend', renderCountryList(countries))
-            refs.countryInfo.insertAdjacentHTML('beforeend', renderCountryInfo(countries))
+            refs.countryList.insertAdjacentHTML('beforeend', searchCountryList(countries))
+            refs.countryInfo.insertAdjacentHTML('beforeend', searchCountryInfo(countries))
         } else if (countries.length >= 10) {
             alertTooManyMatches()
         } else {
-            refs.countryList.insertAdjacentHTML('beforeend', renderCountryList(countries))
+            refs.countryList.insertAdjacentHTML('beforeend', searchCountryList(countries))
         }
         })
     .catch(alertWrongName)
 };  
 
 
-function renderCountryList(arrayNameFlag) {
-    const markup = arrayNameFlag
+function searchCountryList(flagList) {
+    const markup = flagList
         .map(({ flags, name }) => {
             return `<li class="country-list_item"><img  class="country-list__flag"  src="${flags.svg}" alt="Flag of ${name.official}" width = 40px height = 30px><h2>${name.official}</h2> </li>`
         }).join("")
     return markup
 };
 
-function renderCountryInfo(arrayFullInfo) {
-    const markup = arrayFullInfo
+function searchCountryInfo(infoList) {
+    const markup = infoList
         .map(({ capital, population, languages }) => {
             return `<ul class="country-info_list">
             <li class = country-info_item><p><b>Capital: </b>${capital}</p></li>
