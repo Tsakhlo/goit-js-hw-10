@@ -4,38 +4,37 @@ import Notiflix from 'notiflix';
 import debounce from 'lodash.debounce';
 
 
-
 const refs = {
-    inputEl: document.querySelector('#search-box'),
+    inputField: document.querySelector('#search-box'),
     countryList: document.querySelector(".country-list"),
     countryInfo: document.querySelector(".country-info"),
 };
 
 const DEBOUNCE_DELAY = 300;
 
-refs.inputEl.addEventListener('input', debounce(onCountryInput, DEBOUNCE_DELAY));
+refs.inputField.addEventListener('input', debounce(onInputField, DEBOUNCE_DELAY));
 
-function onCountryInput() {
-    const name = refs.inputEl.value.trim();
+function onInputField() {
+    const name = refs.inputField.value.trim();
     if (name === "") {
         return (refs.countryList.innerHTML = ""), (refs.countryInfo.innerHTML = "")
     };
 
 
-    fetchCountries(name)
-        .then(countries => {
-            refs.countryList.innerHTML = ''
-            refs.countryInfo.innerHTML = ''
-            if (countries.length === 1) {
-                refs.countryList.insertAdjacentHTML('beforeend', renderCountryList(countries))
-                refs.countryInfo.insertAdjacentHTML('beforeend', renderCountryInfo(countries))
-            } else if (countries.length >= 10) {
-                alertTooManyMatches()
-            } else {
-                refs.countryList.insertAdjacentHTML('beforeend', renderCountryList(countries))
-            }
+fetchCountries(name)
+    .then(countries => {
+        refs.countryList.innerHTML = ''
+        refs.countryInfo.innerHTML = ''
+        if (countries.length === 1) {
+            refs.countryList.insertAdjacentHTML('beforeend', renderCountryList(countries))
+            refs.countryInfo.insertAdjacentHTML('beforeend', renderCountryInfo(countries))
+        } else if (countries.length >= 10) {
+            alertTooManyMatches()
+        } else {
+            refs.countryList.insertAdjacentHTML('beforeend', renderCountryList(countries))
+        }
         })
-        .catch(alertWrongName)
+    .catch(alertWrongName)
 };  
 
 
